@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: Supermercado  # Nombre de la base de datos
+      #MYSQL_USER: root
+      #MYSQL_PASSWORD: 123
+    ports:
+      - "3309:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # Volumen para persistencia de datos
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Script para crear tablas y insertar datos
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db_data:
